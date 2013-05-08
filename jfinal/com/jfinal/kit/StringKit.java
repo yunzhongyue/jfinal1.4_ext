@@ -73,6 +73,7 @@ public class StringKit {
 		return true;
 	}
 	
+	//字符串转布尔值
 	public static boolean toBoolean(String str)
 	{
 		if(StringKit.isBlank(str))
