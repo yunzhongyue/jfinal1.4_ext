@@ -51,6 +51,8 @@ public final class JFinalFilter implements Filter {
 		if (jfinal.init(jfinalConfig, filterConfig.getServletContext()) == false)
 			throw new RuntimeException("JFinal init error!");
 		
+		
+		//获取初始化参数
 		encoding=filterConfig.getInitParameter("encoding");
 		
 		String devMode=filterConfig.getInitParameter("devMode");
