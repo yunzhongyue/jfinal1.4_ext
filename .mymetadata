@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-module
+  type="WEB"
+  name="jfinal1.4_ext_1.0"
+  id="myeclipse.1367843462741"
+  context-root="/jfinal_z"
+  j2ee-spec="6.0"
+  archive="jfinal1.4_ext_1.0.war">
+  <attributes>
+    <attribute name="webrootdir" value="WebRoot" />
+  </attributes>
+</project-module>
+
