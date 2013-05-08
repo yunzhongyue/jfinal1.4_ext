@@ -84,6 +84,7 @@ public final class JFinal {
 		return true;
 	}
 	
+	//初始化路由
 	private void initRoute()
 	{
 		String classPath=PathKit.getRootClassPath();
@@ -95,8 +96,9 @@ public final class JFinal {
 		}
 	}
 	
+	//扫描路由
 	@SuppressWarnings("unchecked")
-	public void scanRoutes(File dir,String pkgPath) throws ClassNotFoundException
+	private void scanRoutes(File dir,String pkgPath) throws ClassNotFoundException
 	{
 		for(File file:dir.listFiles())
 		{
