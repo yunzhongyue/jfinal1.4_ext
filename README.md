@@ -1,4 +1,4 @@
-jfinal1.4_扩展版
+jfinal1.4_衍生版
 =============
 
 jfinal1.4衍生版version1.0
