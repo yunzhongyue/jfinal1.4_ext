@@ -47,11 +47,6 @@ public final class JFinalFilter implements Filter {
 	
 	public void init(FilterConfig filterConfig) throws ServletException {
 		
-		createJFinalConfig(filterConfig.getInitParameter("configClass"));
-		if (jfinal.init(jfinalConfig, filterConfig.getServletContext()) == false)
-			throw new RuntimeException("JFinal init error!");
-		
-		
 		//获取初始化参数
 		encoding=filterConfig.getInitParameter("encoding");
 		
@@ -61,7 +56,6 @@ public final class JFinalFilter implements Filter {
 		String autoConfig=filterConfig.getInitParameter("autoConfig");
 		String maxPostSize=filterConfig.getInitParameter("maxPostSize");
 		
-		handler = jfinal.getHandler();
 		constants = Config.getConstants();
 		
 		if(devMode!=null) constants.setDevMode(StringKit.toBoolean(devMode));
@@ -70,6 +64,12 @@ public final class JFinalFilter implements Filter {
 		if(viewType!=null) constants.setViewType(ViewType.getViewType(viewType));
 		if(autoConfig!=null) constants.setAutoConfig(StringKit.toBoolean(autoConfig));
 		if(maxPostSize!=null) constants.setMaxPostSize(Integer.parseInt(maxPostSize));
+		
+		createJFinalConfig(filterConfig.getInitParameter("configClass"));
+		if (jfinal.init(jfinalConfig, filterConfig.getServletContext()) == false)
+			throw new RuntimeException("JFinal init error!");
+			
+		handler = jfinal.getHandler();
 		
 		encoding = constants.getEncoding();
 		jfinalConfig.afterJFinalStart();

@@ -71,11 +71,10 @@ public final class JFinal {
 		
 		
 		initPathUtil();
-
-		Config.configJFinal(jfinalConfig);	// start plugin and init logger factory in this method
 		
 		constants = Config.getConstants();
 		if(constants.isAutoConfig()) autoConfig();
+		Config.configJFinal(jfinalConfig);	// start plugin and init logger factory in this method
 		
 		initActionMapping();
 		initHandler();
