@@ -58,7 +58,7 @@ public final class JFinalFilter implements Filter {
 		String devMode=filterConfig.getInitParameter("devMode");
 		String urlParaSeparator=filterConfig.getInitParameter("urlParaSeparator");
 		String viewType=filterConfig.getInitParameter("viewType");
-		String autoRegisterAction=filterConfig.getInitParameter("autoRegisterAction");
+		String autoConfig=filterConfig.getInitParameter("autoConfig");
 		String maxPostSize=filterConfig.getInitParameter("maxPostSize");
 		
 		handler = jfinal.getHandler();
@@ -68,7 +68,7 @@ public final class JFinalFilter implements Filter {
 		if(encoding!=null) constants.setEncoding(encoding);
 		if(urlParaSeparator!=null) constants.setUrlParaSeparator(urlParaSeparator);
 		if(viewType!=null) constants.setViewType(ViewType.getViewType(viewType));
-		if(autoRegisterAction!=null) constants.setAutoRegisterAction(StringKit.toBoolean(autoRegisterAction));
+		if(autoConfig!=null) constants.setAutoConfig(StringKit.toBoolean(autoConfig));
 		if(maxPostSize!=null) constants.setMaxPostSize(Integer.parseInt(maxPostSize));
 		
 		encoding = constants.getEncoding();

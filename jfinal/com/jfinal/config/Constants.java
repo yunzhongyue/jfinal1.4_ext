@@ -41,7 +41,7 @@ final public class Constants {
 	private String encoding = Const.DEFAULT_ENCODING;
 	private String urlParaSeparator = Const.DEFAULT_URL_PARA_SEPARATOR;
 	private ViewType viewType = Const.DEFAULT_VIEW_TYPE;
-	private boolean autoRegisterAction=true;
+	private boolean autoConfig=true;
 	private String jspViewExtension = Const.DEFAULT_JSP_EXTENSION;
 	private String freeMarkerViewExtension = Const.DEFAULT_FREE_MARKER_EXTENSION;
 	private String velocityViewExtension = Const.DEFAULT_VELOCITY_EXTENSION;
@@ -317,13 +317,14 @@ final public class Constants {
 		RenderFactory.setErrorRenderFactory(errorRenderFactory);
 	}
 
-	public boolean isAutoRegisterAction() {
-		return autoRegisterAction;
+	public boolean isAutoConfig() {
+		return autoConfig;
 	}
 
-	public void setAutoRegisterAction(boolean autoRegisterAction) {
-		this.autoRegisterAction = autoRegisterAction;
+	public void setAutoConfig(boolean autoConfig) {
+		this.autoConfig = autoConfig;
 	}
+
 }
 
 

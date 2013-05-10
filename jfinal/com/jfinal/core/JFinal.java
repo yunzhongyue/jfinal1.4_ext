@@ -21,7 +21,11 @@ import java.util.List;
 
 import javax.servlet.ServletContext;
 
+import com.jfinal.aop.Interceptor;
 import com.jfinal.config.Constants;
+import com.jfinal.config.GlobalConfig;
+import com.jfinal.config.Handlers;
+import com.jfinal.config.Interceptors;
 import com.jfinal.config.JFinalConfig;
 import com.jfinal.handler.Handler;
 import com.jfinal.handler.HandlerFactory;
@@ -71,7 +75,7 @@ public final class JFinal {
 		Config.configJFinal(jfinalConfig);	// start plugin and init logger factory in this method
 		
 		constants = Config.getConstants();
-		if(constants.isAutoRegisterAction()) initRoute();
+		if(constants.isAutoConfig()) autoConfig();
 		
 		initActionMapping();
 		initHandler();
@@ -85,26 +89,30 @@ public final class JFinal {
 	}
 	
 	//初始化路由
-	private void initRoute()
+	private void autoConfig()
 	{
 		String classPath=PathKit.getRootClassPath();
 		File file=new File(classPath);
 		try {
-			scanRoutes(file,"");
+			scanConfig(file,"");
 		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (InstantiationException e) {
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
 			e.printStackTrace();
 		}
 	}
 	
 	//扫描路由
 	@SuppressWarnings("unchecked")
-	private void scanRoutes(File dir,String pkgPath) throws ClassNotFoundException
+	private void scanConfig(File dir,String pkgPath) throws ClassNotFoundException, InstantiationException, IllegalAccessException
 	{
 		for(File file:dir.listFiles())
 		{
 			if(file.isDirectory())
 			{
-				scanRoutes(file,pkgPath+file.getName()+".");
+				scanConfig(file,pkgPath+file.getName()+".");
 			}
 			else if(file.getName().indexOf(".class")!=-1)
 			{
@@ -123,6 +131,7 @@ public final class JFinal {
 				
 				Class<?> clazz=Class.forName(fileName);
 				
+				//配置Controller
 				if(Controller.class.isAssignableFrom(clazz))
 				{
 					BasePath basePath=clazz.getAnnotation(BasePath.class);
@@ -141,6 +150,28 @@ public final class JFinal {
 					else
 					{
 						Config.getRoutes().add(fileName, (Class<? extends Controller>) clazz);
+					}
+				}
+				
+				//配置Interceptors
+				if(Interceptors.class.isAssignableFrom(clazz))
+				{
+					GlobalConfig gcfg=clazz.getAnnotation(GlobalConfig.class);
+					
+					if(gcfg!=null)
+					{
+						Config.getInterceptors().add((Interceptor) clazz.newInstance());
+					}
+				}
+				
+				//配置Handlers
+				if(Handlers.class.isAssignableFrom(clazz))
+				{
+					GlobalConfig gcfg=clazz.getAnnotation(GlobalConfig.class);
+					
+					if(gcfg!=null)
+					{
+						Config.getHandlers().add((Handler) clazz.newInstance());
 					}
 				}
 			}
