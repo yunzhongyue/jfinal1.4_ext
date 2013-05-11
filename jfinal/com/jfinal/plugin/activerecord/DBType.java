@@ -2,7 +2,7 @@ package com.jfinal.plugin.activerecord;
 
 public enum DBType {
 
-	ORACLE,MYSQL,SQLSERVER,POSTGRESQL,SQLITE,DB2,INFORMIX,OTHER;
+	ORACLE,MYSQL,SQLSERVER,POSTGRESQL,SQLITE,DERBY,DB2,SYBASE,INFORMIX,OTHER;
 	
 	public static DBType get(String type)
 	{
@@ -28,9 +28,17 @@ public enum DBType {
 			{
 				return DBType.SQLITE;
 			}
+			else if(type.equalsIgnoreCase("DERBY"))
+			{
+				return DBType.DERBY;
+			}
 			else if(type.equalsIgnoreCase("DB2"))
 			{
 				return DBType.DB2;
+			}
+			else if(type.equalsIgnoreCase("SYBASE"))
+			{
+				return DBType.SYBASE;
 			}
 			else if(type.equalsIgnoreCase("INFORMIX"))
 			{
