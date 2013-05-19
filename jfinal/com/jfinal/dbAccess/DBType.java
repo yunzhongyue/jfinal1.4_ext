@@ -1,4 +1,4 @@
-package com.jfinal.plugin.activerecord;
+package com.jfinal.dbAccess;
 
 public enum DBType {
 
