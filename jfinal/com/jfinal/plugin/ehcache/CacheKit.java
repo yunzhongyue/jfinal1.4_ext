@@ -45,7 +45,7 @@ public class CacheKit {
 				cache = cacheManager.getCache(cacheName);
 				if (cache == null) {
 					log.warn("Could not find cache config [" + cacheName + "], using default.");
-					cacheManager.addCacheIfAbsent(cacheName);
+					cacheManager.addCache(cacheName);
 					cache = cacheManager.getCache(cacheName);
 					log.debug("Cache [" + cacheName + "] started.");
 				}

@@ -17,7 +17,7 @@
 package com.jfinal.plugin.activerecord.tx;
 
 import java.sql.Connection;
-import java.sql.SQLException;
+
 import com.jfinal.aop.Interceptor;
 import com.jfinal.core.ActionInvocation;
 import com.jfinal.plugin.activerecord.ActiveRecordException;
@@ -34,23 +34,11 @@ public class Tx implements Interceptor {
 	}
 	
 	public void intercept(ActionInvocation invocation) {
-		Connection conn = DbKit.getThreadLocalConnection();
-		if (conn != null) {	// Nested transaction support
-			try {
-				if (conn.getTransactionIsolation() < getTransactionLevel())
-					conn.setTransactionIsolation(getTransactionLevel());
-				invocation.invoke();
-				return ;
-			} catch (SQLException e) {
-				throw new ActiveRecordException(e);
-			}
-		}
-		
+		Connection conn =null;		
 		Boolean autoCommit = null;
 		try {
 			conn = DbKit.getConnection();
 			autoCommit = conn.getAutoCommit();
-			DbKit.setThreadLocalConnection(conn);
 			conn.setTransactionIsolation(getTransactionLevel());	// conn.setTransactionIsolation(transactionLevel);
 			conn.setAutoCommit(false);
 			invocation.invoke();
@@ -69,9 +57,6 @@ public class Tx implements Interceptor {
 				}
 			} catch (Exception e) {
 				e.printStackTrace();	// can not throw exception here, otherwise the more important exception in previous catch block can not be thrown
-			}
-			finally {
-				DbKit.removeThreadLocalConnection();	// prevent memory leak
 			}
 		}
 	}
